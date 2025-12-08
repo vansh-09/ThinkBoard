@@ -4,8 +4,8 @@
   "description": "**ThinkBoard**",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --prefix frontend && npm install --prefix backend && npm run build --prefix frontend",
-    "start": "node backend/src/server.js"
+    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "start": "cd backend && npm start"
   },
   "repository": {
     "type": "git",
