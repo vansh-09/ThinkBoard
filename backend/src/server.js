@@ -11,8 +11,13 @@ dotenv.config();
 
 const app = express();
 
-// Railway MUST control the port
+// ❗R A I L W A Y   F I X — MUST USE THEIR PORT
 const PORT = process.env.PORT;
+
+if (!PORT) {
+  console.error("❌ ERROR: Railway did NOT provide PORT");
+  process.exit(1);
+}
 
 const __dirname = path.resolve();
 
@@ -28,7 +33,9 @@ app.use(rateLimiter);
 
 app.use("/api/notes", notesRoutes);
 
-// ---- PRODUCTION STATIC FILES ----
+// -------------------------
+// PRODUCTION STATIC FILES
+// -------------------------
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "frontend/dist")));
 
@@ -39,6 +46,6 @@ if (process.env.NODE_ENV === "production") {
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("Server started on PORT:", PORT);
+    console.log("🚀 Server started on PORT:", PORT);
   });
 });
