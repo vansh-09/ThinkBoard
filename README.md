@@ -3,7 +3,7 @@
   <img src="assets/banner.png" alt="ThinkBoard Banner" />
 </p>
 <p align="center">
-  <a href="(https://thinkboard-8vp8.onrender.com)/">
+  <a href="https://thinkboard-8vp8.onrender.com"/>
     <img src="https://img.shields.io/badge/🚀_Live_Demo-thinkboard--production-blue?style=for-the-badge" alt="Live Demo">
   </a>
 </p>
