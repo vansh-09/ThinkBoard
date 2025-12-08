@@ -4,7 +4,7 @@
   "description": "**ThinkBoard**",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm install && npx vite build && cd .. && mkdir -p backend/frontend/dist && cp -r frontend/dist/* backend/frontend/dist/",
+    "build": "cd frontend && npm install && npx vite build && cd ../backend && npm install && cd .. && mkdir -p backend/frontend/dist && cp -r frontend/dist/* backend/frontend/dist/",
     "start": "cd backend && npm start"
   },
   "repository": {
