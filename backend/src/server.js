@@ -11,40 +11,32 @@ dotenv.config();
 
 const app = express();
 
-// 🚨 IMPORTANT: Railway requires NO FALLBACK
+// Railway MUST control the port
 const PORT = process.env.PORT;
 
 const __dirname = path.resolve();
 
-// Middleware
+// middleware
 if (process.env.NODE_ENV !== "production") {
-  app.use(
-    cors({
-      origin: "http://localhost:5173",
-    })
-  );
+  app.use(cors({ origin: "http://localhost:5173" }));
 } else {
-  // In production, allow all origins
   app.use(cors());
 }
 
 app.use(express.json());
 app.use(rateLimiter);
 
-// API routes
 app.use("/api/notes", notesRoutes);
 
-// Production static files
+// ---- PRODUCTION STATIC FILES ----
 if (process.env.NODE_ENV === "production") {
-  // 🧠 server.js is inside backend/src → go 2 levels up
-  app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+  app.use(express.static(path.join(__dirname, "frontend/dist")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+    res.sendFile(path.join(__dirname, "frontend/dist/index.html"));
   });
 }
 
-// Database + Server start
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log("Server started on PORT:", PORT);
