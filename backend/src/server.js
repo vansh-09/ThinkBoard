@@ -10,23 +10,33 @@ import rateLimiter from "./middleware/rateLimiter.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+
+// 🚨 IMPORTANT: Railway requires NO FALLBACK
+const PORT = process.env.PORT;
+
 const __dirname = path.resolve();
 
-// middleware
+// Middleware
 if (process.env.NODE_ENV !== "production") {
   app.use(
     cors({
       origin: "http://localhost:5173",
     })
   );
+} else {
+  // In production, allow all origins
+  app.use(cors());
 }
-app.use(express.json()); // this middleware will parse JSON bodies: req.body
+
+app.use(express.json());
 app.use(rateLimiter);
 
+// API routes
 app.use("/api/notes", notesRoutes);
 
+// Production static files
 if (process.env.NODE_ENV === "production") {
+  // 🧠 server.js is inside backend/src → go 2 levels up
   app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
   app.get("*", (req, res) => {
@@ -34,6 +44,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// Database + Server start
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log("Server started on PORT:", PORT);
