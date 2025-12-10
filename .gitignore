@@ -46,6 +46,10 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Explicitly ignore node_modules in frontend and backend
+frontend/node_modules/
+backend/node_modules/
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
